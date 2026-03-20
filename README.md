@@ -1,50 +1,102 @@
-# ROS2 Dynamic Publisher-Subscriber System
+ROS2 Dynamic Publisher–Subscriber Control System
+# ROS2 Dynamic Publisher–Subscriber Control System
 
-##  Overview
-This project implements a ROS2 Humble system with:
-- Two independent publishers (`publisher1`, `publisher2`)
-- One intelligent subscriber acting as a control unit
+> Real-time, interactive control over multiple ROS2 data streams using a single intelligent subscriber node.
 
-The subscriber dynamically switches between publishers using user input without restarting nodes.
+---
 
-##  Features
-- Real-time topic switching
-- Dynamic unsubscribe and resubscribe
-- Multi-threaded input handling
-- Continuous data streaming
-- Clean modular ROS2 architecture
+## ✨ Overview
 
-##  Setup Instructions
+This project demonstrates a modular ROS2 Humble architecture with two independent publishers and a smart subscriber that dynamically switches between them at runtime. The system eliminates the need for restarts or additional control nodes, enabling seamless real-time topic management.
 
-### 1. Build Workspace
-bash
+---
+
+## 🧠 Key Highlights
+
+- 🔄 **Dynamic Subscription Switching** — Change active data source at runtime
+- ⚡ **Real-Time Communication** — Continuous streaming using ROS2 topics
+- 🧩 **Modular Design** — Independent publishers with a centralized control subscriber
+- 🛠️ **Thread-Safe Execution** — Uses multi-threading for uninterrupted input handling
+- 🚫 **Zero Restart Required** — Switch nodes instantly without stopping the system
+
+---
+
+## 🏗️ Architecture
+
+
++----------------+ +----------------+
+| Publisher 1 | | Publisher 2 |
+| (node1_topic) | | (node2_topic) |
++--------+-------+ +--------+-------+
+| |
+| |
++-----------+-------------+
+|
++-------v--------+
+| Subscriber |
+| (Control Unit) |
++----------------+
+
+
+---
+
+## 📂 Project Structure
+
+
+switch_pubsub/
+├── publisher1.py # Publishes data on node1_topic
+├── publisher2.py # Publishes data on node2_topic
+├── subscriber.py # Dynamic subscriber + control interface
+
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+
+- ROS2 Humble installed
+- Python 3.8+
+- Colcon build system
+
+---
+
+### 🔧 Build Instructions
+
+```bash
 cd ~/ros2_ws
 colcon build --packages-select switch_pubsub
 source install/setup.bash
-Run Nodes
+▶️ Run the System
 
+Open three terminals:
 
-Open 3 terminals:
-Terminal 1
-  ros2 run switch_pubsub publisher1
-Terminal 2
-  ros2 run switch_pubsub publisher2
-Terminal 3
-  ros2 run switch_pubsub subscriber
-Usage
+# Terminal 1
+ros2 run switch_pubsub publisher1
+
+# Terminal 2
+ros2 run switch_pubsub publisher2
+
+# Terminal 3
+ros2 run switch_pubsub subscriber
+🎮 Interactive Usage
 
 Select initial node:
-node1 / node2
-During runtime:
-  Press s → switch subscription
-  Press q → quit
 
-Example Flow
+node1 / node2
+
+Runtime controls:
+
+s → Switch active publisher
+
+q → Exit system
+
+🔄 Example Output
 Subscribed to node1
-[Node1] Publisher 1 data 10
+[Node1] Publisher 1 data 12
 
 Press 's'
 Enter node → node2
 
 Subscribed to node2
-[Node2] Publisher 2 data 5
+[Node2] Publisher 2 data 3
